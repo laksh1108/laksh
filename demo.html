@@ -30,11 +30,14 @@
    </div>
   </div>
   <script>
-    let a=document.getElementById("header-title");
-    a.style.border="2px solid black";
-    let b=document.querySelectorAll(".title");
-    b[0].style.color="green";
-    b[0].style.fontWeight="bold";
+    let a=document.querySelectorAll(".list-group-item");
+    a[2].style.backgroundColor="green";
+    a.forEach(e=>{
+        e.style.fontWeight="bold";
+        e.style.color="gold";
+
+    })
+    
   </script>
 
 </body>
