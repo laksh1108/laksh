@@ -3,19 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <title>Item Listner</title>
+    <link rel="icon" href="">
 </head>
 <body>
-    <h1>JSON.stringify</h1>
-    <script>
-        let obj={
-            name:"laxman",
-            age:23,
-        }
-        localStorage.setItem(obj.name,JSON.stringify(obj));
-        let a=JSON.parse(localStorage.getItem(obj.name));
-        console.log(a);
-    </script>
     
+      <div class="container">
+       <div id="main" class="card card-body">
+        <h2 class="title">Add Items</h2>
+        <form id="addForm" class="form-inline mb-3">
+          Name : <input type="text" class="form-control mr-2" id="name">
+          Email ID : <input type="text" class="form-control mr-2" id="mail">
+          Ph No : <input type="text" class="form-control mr-2" id="ph">
+         <input type="submit" class="btn btn-dark" value="Submit" id="sub">
+        </form>
+        <h2 class="title"></h2>
+        <ul id="items" class="list-group"></ul>
+       </div>
+      </div>
+      <script>
+        let obj={};
+        let ul=document.querySelector("#items");
+        let name=document.querySelector("#name");
+        let email=document.querySelector("#mail");
+        let ph=document.querySelector("#ph");
+        let form=document.querySelector("#addForm");
+        // adding li to api and in ul...
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            var li =document.createElement('li');
+            var btn =document.createElement('button');
+            btn.class='btn';
+            btn.textContent='delete';
+            li.className='li';
+            li.textContent=`${name.value} ${email.value} ${ph.value}`;
+            li.appendChild(btn);
+            ul.appendChild(li);
+            obj.name=name.value;
+            obj.mail=email.value;
+            let key=email.value
+            obj.phone=ph.value
+            localStorage.setItem(email.value,JSON.stringify(obj))
+
+            btn.addEventListener('click',(e)=>{
+                e.preventDefault();
+                localStorage.removeItem(key)
+                var del=e.target.parentElement;
+                del.remove(del);
+                
+                
+
+            })
+            name.value='';
+            email.value='';
+            ph.value='';
+
+
+        })
+        
+        
+      </script>
 </body>
 </html>
