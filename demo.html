@@ -44,39 +44,59 @@
   </div>
   <script>
     var ul=document.getElementById('items');
-    var li=document.createElement('li');
-    var btn=document.createElement('button');
-    var edit=document.createElement('button');
+    var input1=document.createElement('input');
+    var addform=document.querySelector('#addForm');
+    var submit=document.querySelector('[type=submit]')
+    var input2=document.querySelector('#item')  
+    input1.className="form-control mr-2";
+    addform.insertBefore(input1,submit)   
+
    
-    edit.className=" btn-info btn-sm float-right delete mr-1"
-    edit.textContent="Edit"
-    btn.className="btn btn-danger btn-sm float-right delete";
-    btn.textContent="X"
-    li.className="list-group-item";
-    li.textContent="Item 5";
-    li.append(btn);
-    li.append(edit);
-    ul.appendChild(li);
-    ul.addEventListener('click',(e)=>{
+    // add the item...
+    addform.addEventListener('submit',(e)=>{
         e.preventDefault();
-        if (e.target.classList.contains('btn-danger')){
-           var x=e.target.parentElement
-           ul.removeChild(x)
-        }
+        var ext=document.createElement('li');
+        var but=document.createElement('button');
+        ext.className="list-group-item";
+        ext.textContent=`${input2.value} ${input1.value} `;
+        but.className="btn btn-danger btn-sm float-right delete";
+        but.textContent="X"
+        ext.append(but);
+        ul.appendChild(ext);
+
+        // remove the add..
+        var del=document.querySelectorAll('.btn-danger');
+        del.forEach(i=>{
+          i.addEventListener('click',(e)=>{
+            let x=e.target.parentElement;
+            ul.removeChild(x)
+        })
+    })
+        // filter....
+
 
     })
-    
-
-       
-    
-
+    var filter=document.getElementById('filter');
+    filter.addEventListener('keyup',(e)=>{
+        e.preventDefault();
+        let val= e.target.value.trim().toLowerCase();
+        var newli =document.querySelectorAll('.list-group-item');
+        newli.forEach(i=>{
+            let z=i.textContent.replace('X','').trim().toLowerCase();
+            if(z.indexOf(val)!== -1){
+                i.style.display='block'
+            }
+            else{
+                i.style.display='none'       
+            }
+        })
+     
 
         
-       
-
-
-   
-
+    })
+    
+    
+    
     
   </script>
 
