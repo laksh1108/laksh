@@ -72,10 +72,8 @@
             ul.removeChild(x)
         })
     })
-        // filter....
-
-
     })
+    // filter...
     var filter=document.getElementById('filter');
     filter.addEventListener('keyup',(e)=>{
         e.preventDefault();
@@ -84,20 +82,14 @@
         newli.forEach(i=>{
             let z=i.textContent.replace('X','').trim().toLowerCase();
             if(z.indexOf(val)!== -1){
-                i.style.display='block'
+                i.style.display='block';
             }
             else{
-                i.style.display='none'       
+                i.style.display='none' ;      
             }
-        })
-     
-
-        
+        })    
     })
-    
-    
-    
-    
+
   </script>
 
 </body>
