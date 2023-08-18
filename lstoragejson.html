@@ -34,35 +34,45 @@
             e.preventDefault();
             var li =document.createElement('li');
             var btn =document.createElement('button');
+            var edit=document.createElement('button');
             btn.class='btn';
             btn.textContent='delete';
+            edit.class='btn';
+            edit.textContent='edit';
             li.className='li';
             li.textContent=`${name.value} ${email.value} ${ph.value}`;
+            li.appendChild(edit);
             li.appendChild(btn);
             ul.appendChild(li);
             obj.name=name.value;
             obj.mail=email.value;
-            let key=email.value
-            obj.phone=ph.value
+            let key=email.value;
+            let n=name.value;
+            let p=ph.value;
+            obj.phone=ph.value;
             localStorage.setItem(email.value,JSON.stringify(obj))
-
+            // edit ...
+            edit.addEventListener('click',(e)=>{
+                e.preventDefault();
+                localStorage.removeItem(key)
+                var editdel =e.target.parentElement;
+                editdel.remove(editdel);
+                name.value=n;
+                email.value=key;
+                ph.value=p;
+            })
+            // delete button ....
             btn.addEventListener('click',(e)=>{
                 e.preventDefault();
                 localStorage.removeItem(key)
-                var del=e.target.parentElement;
-                del.remove(del);
+                var delbtn=e.target.parentElement;
+                delbtn.remove(delbtn);
                 
-                
-
             })
             name.value='';
             email.value='';
             ph.value='';
-
-
         })
-        
-        
       </script>
 </body>
 </html>
