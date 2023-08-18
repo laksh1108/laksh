@@ -116,10 +116,12 @@
     </section>
     <script>
         let ul=document.getElementById('users');
-        let form=document.getElementById('my-form');
+        let addlist=document.querySelector('btn');
+        console.log(addlist)
+
         let name=document.getElementById('name');
         let email=document.getElementById('email');
-        form.addEventListener("submit",(e)=>{
+        addlist.addEventListener("click",(e)=>{
             e.preventDefault();
             let li=document.createElement('li');
             li.className="item";
@@ -129,10 +131,6 @@
             name.value="";
             email.value="";
         })
-        
-        
-        
-
     </script>
 </body>
 </html>
