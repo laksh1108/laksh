@@ -30,16 +30,20 @@
    </div>
   </div>
   <script>
-    let a =document.querySelectorAll("li");
-    a[1].style.color="green";
-    
-    a.forEach((e,i)=>{
-        if(i % 2===0)
-        e.style.backgroundColor="green";
-        
-    })
-    
+    let cont=document.getElementsByClassName('container');
+    let add=document.createElement('p')
+    let h=document.getElementById('header-title');
+    add.id='added';
+    add.textContent='Hello World';
+    cont[0].insertBefore(add,h);
+    let ul=document.getElementById('items');
+    let li=document.getElementsByClassName("list-group-item");
+    let newli=document.createElement('li');
+    newli.className="list-group-item";
+    newli.textContent="Hello World";
+    ul.insertBefore(newli,li[0])
 
+    
   </script>
 
 </body>
