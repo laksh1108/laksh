@@ -6,9 +6,10 @@
   <title>Document</title>
   <link rel="icon" href="">
   <style>
-    .drag-list {
+    #groupA {
       list-style: none;
       padding: 0;
+      border: 2px solid blue ;
     }
 
     .drag-item {
@@ -20,36 +21,55 @@
     .dragging{
       outline: 2px dotted blue;
     }
+    #groupB {
+      list-style: none;
+      padding: 0;
+      border: 2px solid red ;
+      min-height:225px;
+
+    }
   </style>
 <body>
-  <ul id="dragList" class="drag-list">
+  <ul id="groupA">
     <li class="drag-item" draggable="true">Mobile</li>
     <li class="drag-item" draggable="true">Laptop</li>
     <li class="drag-item" draggable="true">Desktop</li>
     <li class="drag-item" draggable="true">Television</li>
     <li class="drag-item" draggable="true">Radio</li>
   </ul>
+  <ul id="groupB" ></ul>
   <script>
-    const sortlist=document.getElementById('dragList');
+    const groupA=document.getElementById('groupA');
+    const groupB=document.getElementById('groupB');
     const items=document.querySelectorAll('.drag-item');
     items.forEach(i=>{
-      i.addEventListener('dragstart',()=>{
-        i.classList.add('dragging') ;
+      i.addEventListener('dragstart',(e)=>{
+        let selected =e.target;
+      
+        groupB.addEventListener('dragover',(e)=>{
+          e.preventDefault();
       })
-      i.addEventListener('dragend',()=>{
-        i.classList.remove('dragging');
-      });
-    });
-    sortlist.addEventListener('dragover',(e)=>{
-      const dragitem=sortlist.querySelector('.dragging')
-      const siblings=[...sortlist.querySelectorAll('.drag-item:not(.dragging)')]
-      let nextsiblings=siblings.find(s=>{
-        return e.clientY <=s.offsetTop+s.offsetHeight/2
+        groupB.addEventListener('drop',(e)=>{
+          groupB.appendChild(selected);
+          selected =null;
+          
       })
-      sortlist.insertBefore(dragitem,nextsiblings)
-
-
+        groupA.addEventListener('dragover',(e)=>{
+          e.preventDefault();
+      })
+        groupA.addEventListener('drop',(e)=>{
+          groupA.appendChild(selected);
+          selected =null
+          
+      }) 
+      })   
+      
     })
+ 
+    
+
+
+   
     
 
   </script>
