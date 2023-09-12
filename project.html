@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <link rel="icon" href="data:,">
+ 
+  <style>
+    *{
+      padding: 0.5rem;
+    }
+    body{
+      color: white;
+      background-color: #F0CFCF;
+      display: flex;
+      font-weight: 500;
+    }
+    .main{
+      background-color: #283044;
+      height: auto;
+      display: flex;
+    }
+    .details{
+      display: flex;
+    }
+    .income{
+      border: 4px solid rgb(98, 161, 3);
+      width: auto;
+      height:90px;
+      display:flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .expense{
+      border: 4px solid rgb(161, 3, 3);
+      width: auto;
+      height:90px;
+      display:flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      padding:2rem;
+    }
+    button{
+      background-color: skyblue;
+    }
+    .discription{
+      display: flex;
+      flex-flow: column nowrap;
+      height: auto;
+      justify-content: center;
+    }
+    button{
+      margin-top: 4rem;
+      border-radius: 10px;
+    }
+    input{
+      border-radius: 10px;
+    }
+    .trans{
+      color: rgb(0, 0, 0);
+    }
+    .heading{
+      white-space: wrap;
+    }
+    header{
+      flex: 1;
+    }
+    .trans{
+      flex: 2;
+    }
+    li{
+        list-style: none;
+        border: 2px solid black;
+        display: flex;
+        justify-content: space-between;
+        white-space: nowrap;
+        padding:0;
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="container main" >
+      <header class="container">
+        <h2 class="heading">INCOME EXPENSE TRACKER</h2>
+        <P>Your Balance</P>
+        <h3>Rs.0</h3>
+        <div class="details">
+          <div class="container income">
+            <h5>INCOME</h5>
+            <h5>RS.0</h5>
+          </div>
+          <div class=" container expense">
+            <h5>EXPENSE</h5>
+            <h5>Rs.0</h5>
+          </div>
+        </div>
+        <div class=" container">
+          <p>Description</p>
+          <input type="text" class="container btn" placeholder="Name" id="name" required>
+          <p>Amount</p>
+          <input type="number" class="container btn" placeholder="Amount" id="amount" required>
+          <button class="container btn button" >Add Transaction</button></div>
+      </header>
+    </div>
+    <div class="container trans">
+      <h3 class="heading">TRANSACTION DETAILS</h3>
+      <ul class="container" id="ul"></ul>
+    </div>
+  </div>
+  <script>
+    let name=document.getElementById("name");
+    let amount=document.getElementById("amount");
+    let btn=document.querySelector("button");
+    let ul=document.getElementById("ul");
+    let inc=document.querySelectorAll(".income h5");
+    let exp=document.querySelectorAll(".expense h5");
+    let total=document.querySelector('header h3')
+    let localstr=JSON.parse(localStorage.getItem('trans'));
+    let transactions=localStorage.getItem('trans')!== null?localstr:[];
+    btn.addEventListener('click',adddetails)
+    function adddetails(e){
+      e.preventDefault()
+      if (name.value===''|| amount.value===''){
+        alert('please enter values')
+      }else{
+        let obj={
+          id:generate(),
+          description:name.value,
+          amt:+amount.value
+        }
+        transactions.push(obj)
+        adddomdetails(obj)
+        updateDetails();
+        localStorageupdate();
+        name.value='';
+        amount.value='';
+      }
+    }
+    function generate(){
+      return Math.floor(Math.random()*100000)
+    }
+    function adddomdetails(obj){
+      let item=document.createElement('li');
+      item.className="list-item m-2";
+      item.innerHTML=`<span>${obj.description} </span> <span> Rs.${obj.amt}</span>
+      <button class="btn btn-danger btn-sm m-1 " onClick="removeDetails(${obj.id})">X</button>`
+      ul.appendChild(item);
+    }
+    function removeDetails(id){
+      transactions=transactions.filter(fill => fill.id !==id);
+      localStorageupdate();
+      init();
+    }
+    function localStorageupdate(){
+      localStorage.setItem('trans',JSON.stringify(transactions));
+    }
+    function updateDetails(){
+      let amt=transactions.map((index)=>index.amt)
+      let incdetails=amt.filter(index=>index>0).reduce((acc,value)=>acc+=value,0)
+      let expdetails=amt.filter(index=>index<0).reduce((acc,value)=>acc+=value,0)
+      let totaldetails=incdetails+expdetails;
+      inc[1].textContent=`Rs.${incdetails}`
+      exp[1].textContent=`Rs.${expdetails}`
+      total.textContent=`Rs.${totaldetails}`
+    }
+    function init(){
+      ul.innerHTML="";
+      transactions.forEach(adddomdetails);
+      updateDetails();
+    }
+    init();
+  </script> 
+</body>
+</html>
+        
+
+        
+
+    </script>
+    
+</body>
+</html>
